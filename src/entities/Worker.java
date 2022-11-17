@@ -8,18 +8,6 @@ public class Worker extends Human implements Workable, JobChanger {
     private Job workPlace;
     private boolean hasBigSalary = false;
     private boolean eatInRestaurant = false;
-    private static String test = "Test static variable";
-
-    public static class InnerClass {
-        public InnerClass() {
-            System.out.println("Создан внутренний static класс, вложенный в Worker");
-        }
-        public void printInfo(String msg) {
-            System.out.println(msg);
-            System.out.println("Static переменная test класса Worker: " + test);
-            System.out.println("Фантазия на этом всё");
-        }
-    }
 
     public Worker() {
         super();
@@ -47,6 +35,7 @@ public class Worker extends Human implements Workable, JobChanger {
         return hasBigSalary;
     }
 
+    @Override
     public void changePlace(Infrastructure inf) { System.out.println("Персонаж " + this.getName() + " теперь работает в " + inf.translate()); }
 
     @Override
@@ -76,7 +65,7 @@ public class Worker extends Human implements Workable, JobChanger {
         if (this == o) return true;
         if (o == null || getClass() != o.getClass()) return false;
         Worker worker = (Worker) o;
-        return this.workPlace == worker.workPlace && this.getName() == worker.getName();
+        return this.workPlace == worker.workPlace && this.getName().equals(worker.getName());
     }
 
     @Override

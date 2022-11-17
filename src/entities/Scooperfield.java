@@ -1,32 +1,31 @@
 package entities;
 
-import exceptions.NotEnoughMoneyException;
-import utilities.Human;
+import utilities.Infrastructure;
 import utilities.Job;
 import utilities.LoseAll;
 import utilities.JobChanger;
 
 import java.util.Objects;
 
-public class Scooperfield extends Human implements LoseAll, JobChanger {
+public class Scooperfield extends Richman implements LoseAll, JobChanger {
     private Job workPlace;
     private int money = 2000000;
-    private Manufacture property;
+    private Manufacture ownManufacture;
 
     public Scooperfield(String name) {
         super(name);
-        System.out.println("Создан персонаж " + name + ".");
+        System.out.println("Создан персонаж " + name + ". Владеет: " + this.getProperty().translate());
     }
 
     public void setProperty(Manufacture p) {
         class PastaFabric extends Manufacture {
-
             public PastaFabric(String name) {
                 super(name);
+                System.out.println("Создан объект " + name);
             }
         }
         PastaFabric pf = new PastaFabric("Макаронная фабрика");
-        this.property = pf;
+        this.ownManufacture = pf;
         System.out.println("Персонаж " + this.getName() + " владеет " + pf.getName());
     }
 
@@ -37,16 +36,14 @@ public class Scooperfield extends Human implements LoseAll, JobChanger {
     }
 
     @Override
-    public void loseProperty() {
-        System.out.println("Персонаж " + this.getName() + " потерял имущество " + this.property.getName());
-        this.property = null;
+    public void changePlace(Infrastructure inf) {
+        System.out.println("Персонаж " + this.getName() + " теперь работает в " + inf.translate());
     }
 
     @Override
-    public void loseMoney(int m) throws NotEnoughMoneyException {
-        if (this.money < m) throw new NotEnoughMoneyException("Ушел в минус");
-        this.money -= m;
-        System.out.println("Персонаж " + this.getName() + " растерял свои капиталы. Баланс: " + this.money);
+    public void loseProperty() {
+        System.out.println("Персонаж " + this.getName() + " потерял имущество " + this.ownManufacture.getName());
+        this.ownManufacture = null;
     }
 
     @Override
@@ -64,6 +61,6 @@ public class Scooperfield extends Human implements LoseAll, JobChanger {
 
     @Override
     public int hashCode() {
-        return Objects.hash(workPlace, money, property);
+        return Objects.hash(workPlace, money, ownManufacture);
     }
 }

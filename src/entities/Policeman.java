@@ -1,14 +1,11 @@
 package entities;
 
 import exceptions.NoEquipmentException;
-import utilities.Human;
-import utilities.Job;
-import utilities.JobChanger;
-import utilities.PoliceStuff;
-import utilities.BeScared;
+import utilities.*;
+
 import java.util.Objects;
 
-public class Policeman extends Human implements JobChanger, BeScared {
+public class Policeman extends Human implements JobChanger {
     private Job workPlace;
     private boolean isOpposeWorkers;
     private Equipment[] eq = new Equipment[] {
@@ -47,11 +44,14 @@ public class Policeman extends Human implements JobChanger, BeScared {
     }
 
     @Override
+    public void changePlace(Infrastructure inf) {
+        System.out.println("Бывший полицейский " + this.getName() + " теперь работает в " + inf.translate());
+    }
+
     public void stopOpposeWorkers() {
         System.out.println("Полиция перестала выступать против рабочих");
     }
 
-    @Override
     public void throwAway() throws NoEquipmentException {
         if (this.eq.length == 0) throw new NoEquipmentException("У полицейского нет экипировки");
         for (int i = 0; i < this.eq.length; i++) {

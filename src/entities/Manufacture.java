@@ -13,7 +13,6 @@ public class Manufacture implements Facility {
 
     public Manufacture(String name) {
         this.name = name;
-        System.out.println("Создана фабрика " + name);
     }
 
     public String getName() {
